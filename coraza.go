@@ -25,7 +25,7 @@ import (
 )
 
 func init() {
-	geo.RegisterGeoDatabaseFromFile("dbGeoIpBlock.mmdb", "country")
+	geo.RegisterGeoDatabaseFromFile("/srv/dbGeoIpBlock.mmdb", "country")
 	caddy.RegisterModule(corazaModule{})
 	httpcaddyfile.RegisterHandlerDirective("coraza_waf", parseCaddyfile)
 }
