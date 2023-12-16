@@ -3,6 +3,11 @@ module github.com/corazawaf/coraza-caddy/v2
 go 1.18
 
 require (
+	github.com/oschwald/geoip2-golang v1.9.0 // indirect
+	github.com/oschwald/maxminddb-golang v1.11.0 // indirect
+)
+
+require (
 	github.com/caddyserver/caddy/v2 v2.7.6
 	github.com/corazawaf/coraza-coreruleset v0.0.0-20230723190514-7bdcbcff3d5a
 	github.com/corazawaf/coraza/v3 v3.0.4
@@ -29,6 +34,7 @@ require (
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chzyer/readline v1.5.1 // indirect
+	github.com/corazawaf/coraza-geoip v0.0.0-20231109100542-e25adf8b7fdc // indirect
 	github.com/corazawaf/libinjection-go v0.1.2 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect

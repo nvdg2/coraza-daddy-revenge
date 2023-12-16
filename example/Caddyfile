@@ -9,22 +9,22 @@
 }
 
 :8080 {
-	coraza_waf {
-		load_owasp_crs
-		directives `
-		Include @coraza.conf-recommended
-		Include @crs-setup.conf.example
-		Include @owasp_crs/*.conf
-		SecRuleEngine On
-		SecDebugLog /dev/stdout
-		SecDebugLogLevel 9
-		SecRule REQUEST_URI "@streq /admin" "id:101,phase:1,t:lowercase,deny,status:403"
-		SecRule REQUEST_BODY "@rx maliciouspayload" "id:102,phase:2,t:lowercase,deny,status:403"
-		SecRule RESPONSE_HEADERS::status "@rx 406" "id:103,phase:3,t:lowercase,deny,status:403"
-		SecResponseBodyAccess On
-		SecResponseBodyMimeType application/json
-		SecRule RESPONSE_BODY "@contains responsebodycode" "id:104,phase:4,t:lowercase,deny,status:403"
-		`
+
+	handle /socket.io/ {
+        reverse_proxy 127.0.0.1:3000 {
+            header_up Host {upstream_hostport}
+        }
+    }
+
+	handle * {
+		coraza_waf {
+			load_owasp_crs
+			directives `
+			SecRule REMOTE_ADDR "@geoLookup" "chain,id:22,log,drop,msg:'Non-BE IP address'"
+			SecRule GEO:COUNTRY_CODE "!@streq BE"
+			SecRule &GEO "@eq 0" "phase:1,id:156,deny,log,msg:'Failed to lookup IP'"
+			`
+		}
+		reverse_proxy {$HTTPBIN_HOST:localhost}:3000
 	}
-	reverse_proxy {$HTTPBIN_HOST:localhost}:8081
 }

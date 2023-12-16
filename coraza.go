@@ -4,6 +4,9 @@
 package coraza
 
 import (
+	_ "embed"
+	geo "github.com/corazawaf/coraza-geoip"
+
 	"errors"
 	"net/http"
 	"path/filepath"
@@ -22,6 +25,7 @@ import (
 )
 
 func init() {
+	geo.RegisterGeoDatabaseFromFile("GeoLite2-Country.mmdb", "country")
 	caddy.RegisterModule(corazaModule{})
 	httpcaddyfile.RegisterHandlerDirective("coraza_waf", parseCaddyfile)
 }
