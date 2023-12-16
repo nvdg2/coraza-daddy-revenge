@@ -11,7 +11,7 @@
 :8080 {
 
 	handle /socket.io/ {
-        reverse_proxy 127.0.0.1:3000 {
+        reverse_proxy juice-shop.herokuapp.com:443 {
             header_up Host {upstream_hostport}
         }
     }
@@ -20,11 +20,10 @@
 		coraza_waf {
 			load_owasp_crs
 			directives `
-			SecRule REMOTE_ADDR "@geoLookup" "chain,id:22,log,drop,msg:'Non-BE IP address'"
+			SecRule REMOTE_ADDR "@geoLookup" "chain,id:23,log,drop,msg:'IP address is not form Belgium !'"
 			SecRule GEO:COUNTRY_CODE "!@streq BE"
-			SecRule &GEO "@eq 0" "phase:1,id:156,deny,log,msg:'Failed to lookup IP'"
 			`
 		}
-		reverse_proxy {$HTTPBIN_HOST:localhost}:3000
+		reverse_proxy https://juice-shop.herokuapp.com:443
 	}
 }

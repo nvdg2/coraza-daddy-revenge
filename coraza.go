@@ -25,7 +25,7 @@ import (
 )
 
 func init() {
-	geo.RegisterGeoDatabaseFromFile("GeoLite2-Country.mmdb", "country")
+	geo.RegisterGeoDatabaseFromFile("dbGeoIpBlock.mmdb", "country")
 	caddy.RegisterModule(corazaModule{})
 	httpcaddyfile.RegisterHandlerDirective("coraza_waf", parseCaddyfile)
 }
