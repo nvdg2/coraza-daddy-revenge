@@ -1,4 +1,4 @@
-module github.com/corazawaf/coraza-caddy/v2
+module github.com/nvdg2/coraza-daddy-revenge
 
 go 1.18
 
